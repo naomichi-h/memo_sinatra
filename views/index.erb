@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Sinatraのテスト</title>
+</head>
+<body>
+<h1>メモ一覧</h1>
+<ul>
+  <% @memos.each do |memo| %>
+    <li><a href="/memos<% memo["id"] %>"><%= memo["title"] %></a></li>
+  <% end %>
+</ul>
+<h1>新規メモ</h1>
+<a href="/memo">作成する</a>
+</body>
+</html>
