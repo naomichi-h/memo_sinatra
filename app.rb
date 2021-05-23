@@ -3,20 +3,30 @@ require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
 
-get '/index' do
+get '/memos' do
   files = Dir.glob("data/*")
   #JSON->ハッシュ->配列
   @memos = files.map {|file| JSON.load(File.read(file))}
-  erb :index
+  erb :memos
 end
 
-get '/memo' do
-  erb :memo
+get '/memos/:id' do
+  #メモのID
+  @id = params[:id]
+  #メモのIDを元に、該当するハッシュを取り出す
+  files = Dir.glob("data/*")
+  @memos = files.map {|file| JSON.load(File.read(file))}
+  @memo = @memos.find {|x| x["id"].include?(@id)}
+  erb :memo_detail
+end
+
+get '/memo_create' do
+  erb :memo_create
 end
 
 
 
-post '/memo' do
+post '/memo_create' do
   @title = params[:title]
   @content = params[:content]
 
@@ -24,5 +34,5 @@ post '/memo' do
   File.open("data/memos_#{memo["id"]}.json", 'w') do |file|
     JSON.dump(memo, file)
   end
-  redirect to("index")
+  redirect to("memos")
 end
