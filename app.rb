@@ -3,6 +3,12 @@ require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
 
+helpers do
+  def h(text)
+    Rack::Utils.escape_html(text)
+  end
+end
+
 get '/memos' do
   files = Dir.glob("data/*")
   #JSON->ハッシュ->配列
@@ -20,7 +26,7 @@ get '/memos/:id' do
   erb :memo_detail
 end
 
-get '/memo_create' do
+get '/memo' do
   erb :memo_create
 end
 
