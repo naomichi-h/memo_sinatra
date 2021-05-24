@@ -24,6 +24,15 @@ get '/memo_create' do
   erb :memo_create
 end
 
+get '/memos/:id/edit' do
+    #メモのID
+    @id = params[:id]
+    #メモのIDを元に、該当するハッシュを取り出す
+    files = Dir.glob("data/*")
+    @memos = files.map {|file| JSON.load(File.read(file))}
+    @memo = @memos.find {|x| x["id"].include?(@id)}
+    erb :memo_edit
+end
 
 
 post '/memos' do
@@ -41,4 +50,15 @@ delete '/memos/:id' do
   @id = params[:id]
   File.delete("data/memos_#{@id}.json")
   redirect to ("/memos")
+end
+
+patch '/memos/:id' do
+  @id = params[:id]
+  @title = params[:title]
+  @content = params[:content]
+  memo = { "id" => @id, "title" => @title, "content"=> @content }
+  File.open("data/memos_#{@id}.json", 'w') do |file|
+  JSON.dump(memo, file)
+end
+  redirect to ("/memos/#{@id}")
 end
