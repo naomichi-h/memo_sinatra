@@ -26,7 +26,7 @@ end
 
 
 
-post '/memo_create' do
+post '/memos' do
   @title = params[:title]
   @content = params[:content]
 
@@ -35,4 +35,10 @@ post '/memo_create' do
     JSON.dump(memo, file)
   end
   redirect to("memos")
+end
+
+delete '/memos/:id' do
+  @id = params[:id]
+  File.delete("data/memos_#{@id}.json")
+  redirect to ("/memos")
 end
