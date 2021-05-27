@@ -2,18 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8"/>
+  <link rel="stylesheet" href="/css/style.css" />
   <title>メモ詳細</title>
 </head>
 <body>
-<h1>タイトル</h1>
-<p><%= h(@memo["title"]) %></p>
-<h2>本文</h2>
-<p><%= h(@memo["content"]) %></p>
-<button><a href="/memos/<%= @id %>/edit" >編集</a></button>
-<form method="post" action="/memos/<%= @id %>">
+ <header class="header">
+    memo sinatra
+  </header>
+<main>
+<div class="content-width">
+<div class="content-wrap content-width">
+<h1 class="content-detal-title"><%= h(@memo["title"]) %></h1>
+<p class="content-detal"><%= h(@memo["content"]) %></p>
+</div>
+
+<form class="btn-flex" method="post" action="/memos/<%= @id %>">
   <input type="hidden" name="_method" value="DELETE">
-  <input type="submit" value="削除">
+  <input class="btn btn-color-red" type="submit" value="削除">
+  <button class="btn btn-color-green"><a class="btn btn-color-green" href="/memos/<%= @id %>/edit" >編集</a></button>
 </form>
-<a href="/memos">メモ一覧へ</a>
+<div class="link">
+<a class="link-content" href="/memos">メモ一覧へ</a>
+  </div>
+  </div>
+</main>
+<footer class="footer">
+    <div class="footer-content">
+      ©︎ naomichi-h 2021
+    </div>
+  </footer>
 </body>
 </html>
