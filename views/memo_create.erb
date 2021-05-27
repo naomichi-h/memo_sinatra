@@ -1,20 +1,33 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
-  <h1>新規メモ</h1>
-  <form action="memos" method="POST">
-    <div>
-      タイトル:<input type="text" name="title" value="">
-    </div>
-    <div>
-      本文:
-      <textarea name="content" rows="5"></textarea>
-    </div>
-    <div>
-      <input type="submit" value="保存する">
+  <header class="header">
+    memo sinatra
+  </header>
+  <main>
+  <div class="background">
+  <div class="content-width">
+  <h1 class="content-title">新規メモ作成</h1>
+  <form class="form" action="memos" method="POST">
+      <input class="form-title" type="text" name="title" value="" placeholder="メモタイトルを入力してください">
+      <textarea class="form-content" name="content" rows="5" placeholder="メモ本文を入力してください"></textarea> 
+    <div class="btn-flex">
+      <input class="btn btn-color-green" type="submit" value="保存">
     </div>
   </form>
+  <div class="link">
+    <a class="link-content" href="/memos">メモ一覧へ</a>
+    </div>
+  </div>
+  </div>
+  </main>
+  <footer class="footer">
+    <div class="footer-content">
+      ©︎ naomichi-h 2021
+    </div>
+  </footer>
 </body>
 </html>
