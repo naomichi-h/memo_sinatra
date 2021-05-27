@@ -13,6 +13,7 @@ get '/memos' do
   files = Dir.glob("data/*")
   #JSON->ハッシュ->配列
   @memos = files.map {|file| JSON.load(File.read(file))}
+  @memos.sort_by! {|h| h["time"]}
   erb :memos
 end
 
@@ -44,8 +45,9 @@ end
 post '/memos' do
   @title = params[:title]
   @content = params[:content]
+  @time = Time.now
 
-  memo = { "id" => SecureRandom.uuid, "title" => @title, "content"=> @content }
+  memo = { "id" => SecureRandom.uuid, "title" => @title, "content"=> @content, "time" => @time }
   File.open("data/memos_#{memo["id"]}.json", 'w') do |file|
     JSON.dump(memo, file)
   end
@@ -62,7 +64,8 @@ patch '/memos/:id' do
   @id = params[:id]
   @title = params[:title]
   @content = params[:content]
-  memo = { "id" => @id, "title" => @title, "content"=> @content }
+  @time = Time.now
+  memo = { "id" => @id, "title" => @title, "content"=> @content, "time" => @time }
   File.open("data/memos_#{@id}.json", 'w') do |file|
   JSON.dump(memo, file)
 end
