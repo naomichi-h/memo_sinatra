@@ -13,7 +13,7 @@ get '/memos' do
   files = Dir.glob("data/*")
   #JSON->ハッシュ->配列
   @memos = files.map {|file| JSON.load(File.read(file))}
-  erb :memos_css
+  erb :memos
 end
 
 get '/memos/:id' do
