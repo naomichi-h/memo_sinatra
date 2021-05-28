@@ -55,11 +55,7 @@ get '/memos/:id' do
 
   search_hash_with_id(@id)
 
-  if @memo
-    erb :memo_detail
-  else
-    redirect not_found
-  end
+  @memo ? (erb :memo_detail) : (redirect not_found)
 end
 
 get '/memo' do
@@ -74,11 +70,7 @@ get '/memos/:id/edit' do
 
   search_hash_with_id(@id)
 
-  if @memo
-    erb :memo_edit
-  else
-    redirect not_found
-  end
+  @memo ? (erb :memo_detail) : (redirect not_found)
 end
 
 post '/memos' do
@@ -101,7 +93,7 @@ patch '/memos/:id' do
   @id = params[:id]
   @title = params[:title]
   @content = params[:content]
-  @time = Time.now
+  @time = Time.now.strftime('%Y年%m月%d日 %a %H:%M')
   edit_memo(@id, @title, @content, @time)
   redirect to("/memos/#{@id}")
 end
