@@ -45,7 +45,7 @@ end
 post '/memos' do
   @title = params[:title]
   @content = params[:content]
-  @time = Time.now
+  @time = Time.now.strftime("%Y年%m月%d日 %a %H:%M")
 
   memo = { "id" => SecureRandom.uuid, "title" => @title, "content"=> @content, "time" => @time }
   File.open("data/memos_#{memo["id"]}.json", 'w') do |file|
