@@ -1,31 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8"/>
-  <link rel="stylesheet" href="/css/style.css" />
-  <title>メモ一覧 | memo sinatra</title>
-</head>
-<body>
-  <header class="header">
-    memo sinatra
-  </header>
-  <main>
-    <div class="content-width">
-    <div class="btn-s btn-color-grey">
+<div class="content-width">
+<div class="btn-s btn-color-grey">
 <a class="btn-s" href="/memo">+ メモを新規作成する</a>
-    </div>
+</div>
 <h1 class="content-title">メモ一覧</h1>
 <ul class="content-wrap">
 <% @memos.each do |memo| %>
-    <li class="link-wrap"><a class="content" href="/memos/<%= memo["id"] %>">タイトル：<%= h(memo["title"]) %></a><p class="content-color-grey">更新時刻：<%= h(memo["time"]) %></p></li>
-  <% end %>
+<li class="link-wrap"><a class="content" href="/memos/<%= memo["id"] %>">タイトル：<%= h(memo["title"]) %></a><p class="content-color-grey">更新時刻：<%= h(memo["time"]) %></p></li>
+<% end %>
 </ul>
-    </div>
-  </main>
-  <footer class="footer">
-    <div class="footer-content">
-      ©︎ naomichi-h 2021
-    </div>
-  </footer>
-</body>
-</html>
+</div>
