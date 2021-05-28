@@ -10,10 +10,12 @@ helpers do
 end
 
 not_found do
+  @title = '404エラー | memo sinatra'
   erb :error_404
 end
 
 get '/memos' do
+  @title = 'メモ一覧 | memo sinatra'
   files = Dir.glob("data/*")
   #JSON->ハッシュ->配列
   @memos = files.map {|file| JSON.load(File.read(file))}
@@ -22,6 +24,7 @@ get '/memos' do
 end
 
 get '/memos/:id' do
+  @title = 'メモ詳細 | memo sinatra'
   #メモのID
   @id = params[:id]
   #メモのIDを元に、該当するハッシュを取り出す
@@ -37,10 +40,12 @@ get '/memos/:id' do
 end
 
 get '/memo' do
+  @title = 'メモ作成 | memo sinatra'
   erb :memo_create
 end
 
 get '/memos/:id/edit' do
+    @title = 'メモ編集 | memo sinatra'
     #メモのID
     @id = params[:id]
     #メモのIDを元に、該当するハッシュを取り出す
