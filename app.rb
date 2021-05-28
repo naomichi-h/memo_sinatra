@@ -9,6 +9,10 @@ helpers do
   end
 end
 
+not_found do
+  erb :error_404
+end
+
 get '/memos' do
   files = Dir.glob("data/*")
   #JSON->ハッシュ->配列
@@ -24,7 +28,12 @@ get '/memos/:id' do
   files = Dir.glob("data/*")
   @memos = files.map {|file| JSON.load(File.read(file))}
   @memo = @memos.find {|x| x["id"].include?(@id)}
-  erb :memo_detail
+
+  if @memo
+    erb :memo_detail
+  else
+    redirect not_found
+  end
 end
 
 get '/memo' do
@@ -38,7 +47,12 @@ get '/memos/:id/edit' do
     files = Dir.glob("data/*")
     @memos = files.map {|file| JSON.load(File.read(file))}
     @memo = @memos.find {|x| x["id"].include?(@id)}
-    erb :memo_edit
+
+    if @memo
+      erb :memo_edit
+    else
+      redirect not_found
+    end
 end
 
 
