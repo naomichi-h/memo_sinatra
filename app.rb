@@ -11,7 +11,7 @@ helpers do
   end
 
   # メモのIDを元に、該当するハッシュを取り出す
-  def search_hash_with_id(id)
+  def search_hash_by_id(id)
     files = Dir.glob('data/*')
     @memos = files.map { |file| JSON.parse(File.read(file)) }
     @memo = @memos.find { |x| x['id'].include?(id) }
@@ -53,7 +53,7 @@ get '/memos/:id' do
   # メモのID
   @id = params[:id]
 
-  search_hash_with_id(@id)
+  search_hash_by_id(@id)
 
   @memo ? (erb :memo_detail) : (redirect not_found)
 end
@@ -80,7 +80,7 @@ post '/memos' do
 
   create_memo(@title, @content, @time)
 
-  redirect to('memos')
+  redirect to('/memos')
 end
 
 delete '/memos/:id' do
