@@ -4,6 +4,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
 require 'securerandom'
+require 'pg'
 
 helpers do
   def h(text)
@@ -74,11 +75,13 @@ get '/memos/:id/edit' do
 end
 
 post '/memos' do
+  @id = SecureRandom.uuid
   @title = params[:title]
   @content = params[:content]
   @time = Time.now.strftime('%Y年%m月%d日 %a %H:%M')
 
-  create_memo(@title, @content, @time)
+  conn = PG.connect( dbname: 'memo_sinatra')
+  conn.exec("INSERT INTO Memos (memo_id, title, content, time) VALUES ('#{@id}', '#{@title}', '#{@content}', '#{@time}')")
 
   redirect to('memos')
 end
