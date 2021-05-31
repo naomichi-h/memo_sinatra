@@ -3,8 +3,8 @@
   <h1 class="content-title">メモ編集</h1>
   <form class="form" action="/memos/<%= @id %>" method="POST">
       <input type="hidden" name="_method" value="PATCH">
-      <input class="form-title" type="text" name="title" value="<%= @memo["title"]%>" placeholder="メモタイトルを入力してください">
-      <textarea class="form-content" name="content" rows="5" placeholder="メモ本文を入力してください"><%= @memo["content"]%></textarea> 
+      <input class="form-title" type="text" name="title" value="<%= h(@memo[0]["title"])%>" placeholder="メモタイトルを入力してください">
+      <textarea class="form-content" name="content" rows="5" placeholder="メモ本文を入力してください"><%= h(@memo[0]["content"])%></textarea> 
     <div class="btn-flex">
       <input class="btn btn-color-green" type="submit" value="保存">
     </div>

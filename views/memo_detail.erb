@@ -1,7 +1,7 @@
 <div class="content-width">
 <div class="content-wrap content-width">
-<h1 class="content-detal-title"><%= h(@memo["title"]) %></h1>
-<p class="content-detal"><%= h(@memo["content"]) %></p>
+<h1 class="content-detal-title"><%= h(@memo[0]["title"]) %></h1>
+<p class="content-detal"><%= h(@memo[0]["content"]) %></p>
 </div>
 
 <form class="btn-flex" method="post" action="/memos/<%= @id %>">
