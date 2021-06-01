@@ -10,10 +10,42 @@ helpers do
   def h(text)
     Rack::Utils.escape_html(text)
   end
-  # DB接続
-  def db_connect(query)
+  # メモ全件取得
+  def find_memo_all
     conn = PG.connect( dbname: 'memo_sinatra')
-    conn.exec(query)
+    conn.exec("SELECT * FROM Memos;")
+  end
+  #　idに該当するメモを一件取得
+  def find_memo(id)
+    conn = PG.connect( dbname: 'memo_sinatra')
+
+    conn.prepare("find", "SELECT * FROM Memos WHERE id = $1;")
+    conn.exec_prepared("find", [id])
+  end
+
+  # 新規メモ登録
+  def create_memo(id, title, content, time)
+    conn = PG.connect( dbname: 'memo_sinatra')
+
+    conn.prepare("create", "INSERT INTO Memos (id, title, content, time) VALUES ($1, $2, $3, $4);")
+    conn.exec_prepared("create", [id, title, content, time])
+  end
+
+  # メモ削除
+  def delete_memo(id)
+    conn = PG.connect( dbname: 'memo_sinatra')
+
+    conn.prepare("delete", "DELETE FROM memos WHERE id = $1;")
+    conn.exec_prepared("delete", [id])
+  end
+
+  # メモ更新
+  def update_memo(title, content, time, id)
+
+    conn = PG.connect( dbname: 'memo_sinatra')
+
+    conn.prepare("update", "UPDATE memos SET title = $1, content = $2, time = $3 WHERE id = $4;")
+    conn.exec_prepared("update", [title, content, time, id])
   end
 end
 
@@ -27,7 +59,7 @@ get '/memos' do
   query = "SELECT * FROM Memos;"
 
   # 取得したメモを時間順に並び替える
-  @memos = db_connect(query).sort_by { |h| h['time'] }
+  @memos = find_memo_all().sort_by { |h| h['time'] }
 
   erb :memos
 end
@@ -35,9 +67,7 @@ end
 get '/memos/:id' do
   @title = 'メモ詳細 | memo sinatra'
   @id = params[:id]
-  query = "SELECT * FROM Memos WHERE id = '#{@id}';"
-
-  @memo = db_connect(query)
+  @memo = find_memo(@id)
   @memo ? (erb :memo_detail) : (redirect not_found)
 end
 
@@ -49,9 +79,8 @@ end
 get '/memos/:id/edit' do
   @title = 'メモ編集 | memo sinatra'
   @id = params[:id]
-  query = "SELECT * FROM Memos WHERE id = '#{@id}';"
+  @memo = find_memo(@id)
 
-  @memo = db_connect(query)
   @memo ? (erb :memo_edit) : (redirect not_found)
 end
 
@@ -60,17 +89,15 @@ post '/memos' do
   @title = params[:title]
   @content = params[:content]
   @time = Time.now.strftime('%Y年%m月%d日 %a %H:%M')
-  query = "INSERT INTO Memos (id, title, content, time) VALUES ('#{@id}', '#{@title}', '#{@content}', '#{@time}');"
 
-  db_connect(query)
+  create_memo(@id, @title, @content, @time)
   redirect to('/memos')
 end
 
 delete '/memos/:id' do
   @id = params[:id]
-  query = "DELETE FROM memos WHERE id = '#{@id}';"
 
-  db_connect(query)
+  delete_memo(@id)
   redirect to('/memos')
 end
 
@@ -79,8 +106,7 @@ patch '/memos/:id' do
   @title = params[:title]
   @content = params[:content]
   @time = Time.now.strftime('%Y年%m月%d日 %a %H:%M')
-  query = "update memos set title = '#{@title}', content = '#{@content}', time = '#{@time}' where id = '#{@id}';"
 
-  db_connect(query)
+  update_memo(@title, @content, @time, @id)
   redirect to("/memos/#{@id}")
 end
