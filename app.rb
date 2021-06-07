@@ -18,7 +18,7 @@ class Memo
 
     # メモ全件取得
     def find_memo_all
-      @conn.exec('SELECT * FROM Memos;')
+      @conn.exec('SELECT * FROM Memos ORDER BY time DESC;')
     end
 
     # 　idに該当するメモを一件取得
@@ -61,7 +61,7 @@ end
 get '/memos' do
   @title = 'メモ一覧 | memo sinatra'
   # 取得したメモを時間順に並び替える
-  @memos = Memo.find_memo_all.sort_by { |h| h['time'] }
+  @memos = Memo.find_memo_all
   erb :memos
 end
 
