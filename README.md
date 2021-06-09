@@ -14,12 +14,20 @@
 
 ## Installation
 
+<<<<<<< HEAD
 1. PostgresSQL のデフォルトユーザーで`memo_sinatra`というデータベースを作成し、`CREATE TABLE memos (id VARCHAR(40) NOT NULL, title TEXT, content TEXT, time VARCHAR(40) NOT NULL);`を実行してください。
 1. `git clone https://github.com/naomichi-h/memo_sinatra`を実行して任意のディレクトリに複製して下さい。
 1. `memo_sinatra`ディレクトリに移動して下さい。
 1. `bundle install`を実行して下さい。Gemfile 記載の`sinatra`、`sinatra-contrib`、`pg`および`thin`がインストールされます。
 1. `memo_sinatra`ディレクトリで`bundle exec ruby app.rb`を実行してください。
 1. 任意のブラウザで`http://localhost:4567/memos`にアクセスしてください。
+=======
+1. `git clone https://github.com/naomichi-h/memo_sinatra`を実行して任意のディレクトリに複製して下さい。
+2. `memo_sinatra`ディレクトリに移動して下さい。
+3. `bundle install`を実行して下さい。Gemfile 記載の`sinatra`と`sinatra-contrib`がインストールされます。
+4. `memo_sinatra`ディレクトリで`bundle exec ruby app.rb`を実行してください。
+5. 任意のブラウザで`http://localhost:4567/memos`にアクセスしてください。
+>>>>>>> main
 
 ## Usage
 
