@@ -6,10 +6,7 @@ GEM
     multi_json (1.15.0)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-<<<<<<< HEAD
     pg (1.2.3)
-=======
->>>>>>> main
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -35,10 +32,7 @@ PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
-<<<<<<< HEAD
   pg
-=======
->>>>>>> main
   sinatra
   sinatra-contrib
   thin
