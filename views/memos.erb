@@ -1,11 +1,13 @@
 <div class="content-width">
-<div class="btn-s btn-color-grey">
-<a class="btn-s" href="/memo">+ メモを新規作成する</a>
-</div>
-<h1 class="content-title">メモ一覧</h1>
-<ul class="content-wrap">
-<% @memos.each do |memo| %>
-<li class="link-wrap"><a class="content" href="/memos/<%= memo["id"] %>">タイトル：<%= h(memo["title"]) %></a><p class="content-color-grey">更新時刻：<%= h(memo["time"]) %></p></li>
-<% end %>
-</ul>
+  <div class="btn-s btn-color-grey">
+    <a class="btn-s" href="/memo">+ メモを新規作成する</a>
+  </div>
+  <h1 class="content-title">メモ一覧</h1>
+  <ul class="content-wrap">
+    <% @memos.each do |memo| %>
+    <li class="link-wrap"><a class="content" href="/memos/<%= memo["id"] %>">タイトル：<%= h(memo["title"]) %></a>
+      <p class="content-color-grey">更新時刻：<%= memo["time"] %></p>
+    </li>
+    <% end %>
+  </ul>
 </div>
